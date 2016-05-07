@@ -1,0 +1,10 @@
+/dev/cu.adelinetush-BlackBerryB
+/dev/cu.adelinetush-BlackBerryD
+/dev/cu.Bluetooth-Incoming-Port
+/dev/cu.Bluetooth-Modem
+/dev/cu.RNBT-8DA4-RNI-SPP
+/dev/tty.adelinetush-BlackBerryB
+/dev/tty.adelinetush-BlackBerryD
+/dev/tty.Bluetooth-Incoming-Port
+/dev/tty.Bluetooth-Modem
+/dev/tty.RNBT-8DA4-RNI-SPP
