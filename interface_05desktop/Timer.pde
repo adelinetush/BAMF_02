@@ -1,3 +1,5 @@
+//This is the timer for the graph
+
 class TimerGraph {
   int savedTime;
   int totalTime;

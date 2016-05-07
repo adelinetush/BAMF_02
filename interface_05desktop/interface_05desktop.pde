@@ -1,14 +1,15 @@
 import controlP5.*;
 import java.util.*;
 
-float[] numbers = new float[400];
-TimerGraph timerGraph;
+float[] numbers = new float[400];    //array for the graph
 
-boolean setPage = false;
+TimerGraph timerGraph;    //Timer for the graph
 
-boolean drawStop;
+boolean setPage = false;    //to go from one page to another
 
-ControlP5 mainMenu;
+boolean drawStop;      //This is the stop timer button. It doesn't work correctly yet
+
+ControlP5 mainMenu;    //this is the main menu - about, pair, etc, to move from page to page
 
 ControlP5 timeCountdown;
 
@@ -39,13 +40,13 @@ boolean backBool = false;
 
 
 void setup() {
-  
+
   timerGraph = new TimerGraph(1000);
-  timerGraph.start();
-  
-   timeCountdown = new ControlP5(this);
-   
-   List list = Arrays.asList("5 Seconds", "10 Seconds", "20 Seconds", "30 Seconds", "1 Minute", "5 Minutes", "10 Minutes", "20 Minutes", "30 Minutes");  // for the dropdown of countdown time
+  timerGraph.start();     //to start the timer for the graph. Later, I will get rid of this timer, and use one timer in the entire app. This is for testing purposes.
+
+  timeCountdown = new ControlP5(this);
+
+  List list = Arrays.asList("5 Seconds", "10 Seconds", "20 Seconds", "30 Seconds", "1 Minute", "5 Minutes", "10 Minutes", "20 Minutes", "30 Minutes");  // for the dropdown of countdown time
   //add a scrollable list
   timeCountdown.addScrollableList("dropdown")
     .setPosition(displayWidth*0.6, displayHeight*0.3)
@@ -57,20 +58,20 @@ void setup() {
 
   timer = new Timer(displayWidth*0.47, displayHeight*0.18) ;     // define position for the main timer (seconds)
   timer.start() ;
-  
+
   minuteTimer = new MinuteTimer(displayWidth*0.42, displayHeight*0.18) ; // define position for the main timer (minutes)
   minuteTimer.start() ;
-  
+
   secondsCountdownTimer = new SecondsCountdownTimer(displayWidth*0.5, displayHeight*0.5);  // define position for the countdown timer (seconds)
   secondsCountdownTimer.start();
-  
+
   minutesCountdownTimer = new MinutesCountdownTimer(displayWidth*0.4, displayHeight*0.5);  // define position for the countdown timer (minutes)
   minutesCountdownTimer.start();
-  
+
   start = new Button(displayWidth*0.2, displayHeight*0.2, "START/RESTART");
   pause = new Button(displayWidth*0.2, displayHeight*0.4, "PAUSE");
   cont = new Button(displayWidth*0.2, displayHeight*0.6, "CONTINUE");
-  
+
   size(1000, 800);
   background = color(#000000);
   font = loadFont("AgencyFB-Bold-48.vlw");
@@ -88,20 +89,20 @@ void setup() {
 }
 
 void draw() {
-  
-   
+
+
 
   stroke(0);
-  
+
   button = color(#345678);
-  
-    drawStopButton();
-  
+
+  drawStopButton();
+
   mainMenu.setFont(new ControlFont(createFont("AgencyFB-Bold-48", 40), 40));
 
-  
 
-  if (setPage) {
+
+  if (setPage) {    //switching between pages
     //about.draw();
     //drawWhite();
     //drawWhite();
@@ -109,7 +110,6 @@ void draw() {
     mouseHandler();
   } else {
     mp.draw();
-    
   }
 
   //mousePressed();
@@ -118,11 +118,10 @@ void draw() {
   if (aboutBool == true) {
     aboutPage.draw();
     mainMenu.hide();
-    
+
     if (backBool == true) {
-    mp.draw();
-    mainMenu.show();
-    
+      mp.draw();
+      mainMenu.show();
     }
   }
   if (helpBool == true) {
@@ -133,11 +132,10 @@ void draw() {
   } else {
     //mp.draw();
   }
-  
-  }
+}
 
 
-void dropdown(int n) {
+void dropdown(int n) {              //main menu dropdown
   //request the selected item based on index n 
   println(n, mainMenu.get(ScrollableList.class, "dropdown").getItem(n));
 
@@ -164,7 +162,7 @@ void dropdown(int n) {
   }
 }
 
-void dropdown2(int n) {
+void dropdown2(int n) {          //Timer dropdown
   /* request the selected item based on index n */
   println(n, timeCountdown.get(ScrollableList.class, "dropdown").getItem(n));
 
@@ -176,7 +174,7 @@ void dropdown2(int n) {
 
   //Depending on the selection from the dropbox, change the amount of time on the countdown
   //and then start the countdown
- 
+
   if (n == 0) {
     publicCounter = 5;
     secondsCountdownTimer.countdown();
@@ -197,7 +195,7 @@ void dropdown2(int n) {
   if (n == 4) {
     publicCounter = 59;
     publicMinuteCounter = 0;
-    if(publicMinuteCounter >= 0) {
+    if (publicMinuteCounter >= 0) {
       publicCounter = 59;
     }
     secondsCountdownTimer.countdown();
@@ -205,7 +203,7 @@ void dropdown2(int n) {
   if (n == 5) {
     publicCounter = 59;
     publicMinuteCounter = 4;
-    if(publicMinuteCounter >= 0) {
+    if (publicMinuteCounter >= 0) {
       publicCounter = 59;
     }
     secondsCountdownTimer.countdown();
@@ -221,7 +219,7 @@ void dropdown2(int n) {
     }
     if (n == 8) {
       publicCounter = 59;
-    publicMinuteCounter = 29;
+      publicMinuteCounter = 29;
       secondsCountdownTimer.countdown();
     } else {
     }
@@ -245,35 +243,34 @@ void mousePressed() {
   mouseHandler();
 }
 
-void mouseHandler () {
+void mouseHandler () {        //*****************************handles all mouse input
   if (mouseX > displayWidth*0.02 && mouseY > displayHeight*0.10 && mouseX < displayWidth*0.08 && mouseY < displayHeight*0.12) {
     mousePressed = !mousePressed;
     mainMenu.hide();
   } 
-  
+
   if (mouseX > 760 && mouseY > 75.6 && mouseX < 940 && mouseY < 162) {
     mousePressed = !mousePressed; 
-   println("hmmm");
+    //println("hmmm");
     timer.restart();
     secondsCountdownTimer.restart();
     minuteTimer.restart();
     minutesCountdownTimer.restart();
-    
+
     drawStop = true;
-   
+
     drawStopButton();
   } else {
   }
-  
-
 } 
 
-void drawStopButton () {
-      if (drawStop == true) {
-      fill(#ff0000);
-      rect (800, 100, 100, 100);
+void drawStopButton () {      //********************that button that doesn't work
+  if (drawStop == true) {
+    fill(#ff0000);
+    rect (800, 100, 100, 100);
   }
 }
+
 //Create a separate class for each page
 class MainPage {
 
@@ -291,7 +288,7 @@ class MainPage {
 
   void draw() {
     font = loadFont("AgencyFB-Bold-48.vlw");
-    
+
     if (!f_move) {
       background(background);
 
@@ -334,14 +331,14 @@ class MainPage {
       textSize(60);
       textAlign(CENTER);
       text("SOME Text", displayWidth*0.14, displayHeight*0.125);
-      
+
       fill(#345678);
       rect(displayWidth*0.4, displayHeight*0.07, displayWidth*0.1, displayHeight*0.06 );
 
       fill(#9797A6);
       textSize(60);
       text("START", displayWidth*0.45, displayHeight*0.125);
-      
+
       fill(#9797A6);
       textSize(60);
       textAlign(CENTER);
@@ -402,27 +399,28 @@ class MainPage {
       textSize(16);
       text("1 jabs/sec", displayWidth*0.05, displayHeight*0.665);
     }
-    
-     stroke(#ff0000);
-  beginShape();
-  for (int i = 21; i<numbers.length; i++) {
-    vertex(i, 480-numbers[i]);
-    
-  }
-  endShape();
-  for (int i = 1; i<numbers.length; i++) {
-    numbers[i-1] = numbers[i];
-  }
-  if (timerGraph.isFinished()) {
-    
-    println("I'm drawing a graph");
 
-    numbers[numbers.length-1]=random(280);
-    timerGraph = new TimerGraph(1000);
-    timerGraph.start();
-    
-  }
-  
+
+    //*****************HERE IS THE GRAPH
+    //basically pick a random number between 0 and 280
+    //480 is the Y position
+    stroke(#ff0000);    
+    beginShape();
+    for (int i = 21; i<numbers.length; i++) {
+      vertex(i, 480-numbers[i]);
+    }
+    endShape();
+    for (int i = 1; i<numbers.length; i++) {
+      numbers[i-1] = numbers[i];
+    }
+    if (timerGraph.isFinished()) {
+
+      println("I'm drawing a graph");
+
+      numbers[numbers.length-1]=random(280);    
+      timerGraph = new TimerGraph(1000);
+      timerGraph.start();
+    }
   }
 
   void keyPressed() {
@@ -509,7 +507,6 @@ class Timer {   //---------------------------------------------------Default Sec
     //textFont(font) ;    
     text(output, x, y) ;
   }
-  
 }
 
 
@@ -577,7 +574,6 @@ class MinuteTimer {   // -------------------------------- default minutes
     //textFont(font) ;    
     text(output, x, y) ;
   }
-
 }
 
 
@@ -639,7 +635,7 @@ class SecondsCountdownTimer {   //----------------------------------------------
     //textFont(font) ;    
     text(output, x, y) ;
   }
-  void setToZero(){
+  void setToZero() {
     text(0, x, y);
   }
   void countdown () {
@@ -655,13 +651,13 @@ class SecondsCountdownTimer {   //----------------------------------------------
     if (newCounter < 0) {
       running = false;
     }
-    
+
     //if (!(newCounter == 0) && publicMinuteCounter > 0 && mousePressed == true){
     //  newCounter = 59;
     //  running = true;
     //}
-    
-    
+
+
     fill(#000000);
     text(newCounter, x, y);
   }
@@ -688,7 +684,7 @@ class MinutesCountdownTimer {   //----------------------------------------------
       return ( (int) (timeSoFar / 60000.0) ) ;
     }
   }
-  
+
   int minutes() {     
     if ( running ) {    
       return (  (int)   ( (millis() - startTime) / 60000.0) ) ;
@@ -741,13 +737,10 @@ class MinutesCountdownTimer {   //----------------------------------------------
     }
     fill(#000000);
     text(newCounter, x, y);
-    
   }
-    
-     
-  }
-  
-  class Button {
+}
+
+class Button {      //Button class
   float x, y;
   String buttonName;
 

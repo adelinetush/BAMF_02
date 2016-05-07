@@ -1,3 +1,5 @@
+//This is the about section
+
 About aboutPage = new About();
 
 class About {
